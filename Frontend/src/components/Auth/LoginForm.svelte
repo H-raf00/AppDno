@@ -35,7 +35,7 @@
                 </div>
                 <a href="#" class="text-xs text-blue-600 hover:underline mt-2">Mot de passe oublié ?</a>
             </div>
-            <Button class="ml-4 h-12 px-8">Connexion</Button>
+            <Button class="ml-4 h-12 px-8 bg-green-600">Connexion</Button>
         </div>
     </div>
 </div>
