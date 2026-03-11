@@ -4,8 +4,7 @@
     import { Checkbox } from "$lib/components/ui/checkbox/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
 </script>
-<!-- I probably don't need to center this component -->
-<div class="flex flex-col items-center justify-center min-h-screen">
+
     <div class="shadow-xl max-w-md bg-white p-8 rounded-lg w-full">
         <div class="flex flex-col items-center">
             <h1 class="mb-6 text-2xl font-bold">AppDNO</h1>
@@ -38,4 +37,4 @@
             <Button class="ml-4 h-12 px-8 bg-green-600">Connexion</Button>
         </div>
     </div>
-</div>
+
