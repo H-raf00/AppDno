@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
+﻿
 namespace AppDnoApi.Entities
 {
     public enum Role
@@ -19,7 +18,7 @@ namespace AppDnoApi.Entities
         public Role Role { get; set; } = Role.USER;
         public string Group { get; set; } = string.Empty;
 
-        public List<Project> Projets { get; set; } = new List<Project>();
+        //public List<Project> Projets { get; set; } = new List<Project>();
 
         public User(string email, string password, string lastName, Role role, string group)
         {

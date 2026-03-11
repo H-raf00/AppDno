@@ -8,6 +8,12 @@ public class GetUsersEndpoint : EndpointWithoutRequest<List<UserInfoResponse>>
 {
 
 
+    private readonly AppDnoDbContext _DbContext;
+    public GetUsersEndpoint(AppDnoDbContext dbContext)
+    {
+        _DbContext = dbContext;
+    }
+
     public override void Configure()
     {
         Get("/api/users");
@@ -16,23 +22,15 @@ public class GetUsersEndpoint : EndpointWithoutRequest<List<UserInfoResponse>>
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        List<UserInfoResponse> users = new List<UserInfoResponse>
-        {
-            new UserInfoResponse
+        List<UserInfoResponse> users = await _DbContext.Users
+            .Select(u => new UserInfoResponse
             {
-                Id = 1,
-                Username = "John Doe",
-                Role = "USER",
-                Group = "Paris",
-            },
-            new UserInfoResponse
-            {
-                Id = 12,
-                Username = "John Daaaoe",
-                Role = "USEaaaR",
-                Group = "Paraaais",
-            }
-        };
+                Id = u.Id,
+                LastName = u.LastName,
+                Role = u.Role,
+                Group = u.Group
+            })
+            .ToListAsync(ct);
 
 
         Response = users;

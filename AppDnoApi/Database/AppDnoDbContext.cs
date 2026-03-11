@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Database
 {
-    public class MyDbContext : DbContext
+    public class AppDnoDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
+        public AppDnoDbContext(DbContextOptions<AppDnoDbContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -24,15 +24,9 @@ namespace AppDnoApi.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // Exemple de configuration de relations (décommentez selon vos besoins)
-            /*
-            modelBuilder.Entity<Progression>()
-                .HasOne<User>()
-                .WithMany()
-                .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-            */
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }
