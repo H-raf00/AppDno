@@ -11,44 +11,28 @@ namespace AppDnoApi.Entities
     public class User
     {
         public int Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public Role Role { get; set; } = Role.USER;
-        // Keep set private?
-        public string Password { get; set; } = string.Empty;
 
-        public User(string username, string password, Role role)
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        
+        public string LastName { get; set; } = string.Empty;
+        public Role Role { get; set; } = Role.USER;
+        public string Group { get; set; } = string.Empty;
+
+        public List<Project> Projets { get; set; } = new List<Project>();
+
+        public User(string email, string password, string lastName, Role role, string group)
         {
-            Username = username;
-            var hasher = new PasswordHasher<User>();
-            Password = hasher.HashPassword(this, password);
+            Email = email;
+            Password = password;
+            LastName = lastName;
             Role = role;
+            Group = group;
         }
 
         // Parameterless constructor required by EF Core when it can't use constructor binding
         protected User() { }
 
-        // Verifies the provided password against the stored one
-        public bool VerifyPassword(string password)
-        {
-            var hasher = new PasswordHasher<User>();
-            var result = hasher.VerifyHashedPassword(this, this.Password, password);
-            if (result == PasswordVerificationResult.Success)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        public void UpdatePassword(string password)
-        {
-
-            var hasher = new PasswordHasher<User>();
-            Password = hasher.HashPassword(this, password);
-        }
     }
 }
 

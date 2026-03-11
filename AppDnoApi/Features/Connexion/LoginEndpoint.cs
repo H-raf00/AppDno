@@ -12,7 +12,7 @@ namespace AppDnoApi.Features.Connexion
 
         public override async Task HandleAsync(UserLoginDTO req, CancellationToken ct)
         {
-            // Votre logique de login ici
+            // pas besoin de le faire pour l'instant.
             ;
         }
     }
