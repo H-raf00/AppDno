@@ -10,8 +10,10 @@ namespace AppDnoApi.Features.Connexion
             AllowAnonymous();
         }
 
-        // login stuff
-
+        public override async Task HandleAsync(UserLoginDTO req, CancellationToken ct)
+        {
+            // Votre logique de login ici
+            ;
+        }
     }
 }
-
