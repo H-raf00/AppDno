@@ -9,26 +9,72 @@ namespace AppDnoApi.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // Vérifie si une configuration est déjà présente
             if (!options.IsConfigured)
             {
-                // Connexion à PostgreSQL par défaut (pour design-time/migrations)
                 options.UseNpgsql("Host=localhost;Database=mydatabase;Username=postgres;Password=postgrespw");
             }
         }
 
-        // All DbSets in one place
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Client> Clients { get; set; } = null!;
         public DbSet<Ingredient> Ingredients { get; set; } = null!;
-        public DbSet<Suppliers> Suppliers { get; set; } = null!;
+        public DbSet<Supplier> Suppliers { get; set; } = null!;
         public DbSet<Project> Projects { get; set; } = null!;
+        public DbSet<Indicator> Indicators { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Email);
+            
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
+                .IsUnique();
+            
+            modelBuilder.Entity<Client>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+            
+            modelBuilder.Entity<Project>()
+                .HasOne(p => p.Responsable)
+                .WithMany() // Un User peut être responsable de plusieurs projets
+                .HasForeignKey(p => p.ResponsableEmail)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Users)
+                .WithMany(u => u.Projets)
+                .UsingEntity(j => j.ToTable("ProjectUsers"));
+            
+            modelBuilder.Entity<Project>()
+                .HasOne(p => p.Client)
+                .WithMany(c => c.Projets)
+                .HasForeignKey(p => p.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Ingredients)
+                .WithMany(i => i.Projects)
+                .UsingEntity(j => j.ToTable("ProjectIngredients"));
+
+            modelBuilder.Entity<Ingredient>()
+                .HasOne(i => i.Supplier)
+                .WithMany(s => s.Ingredients)
+                .HasForeignKey(i => i.SupplierId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Ingredient>()
+                .HasIndex(i => i.Name)
+                .IsUnique();
+            
+            modelBuilder.Entity<Supplier>()
+                .HasIndex(s => s.Name)
+                .IsUnique();
+            
+            modelBuilder.Entity<Indicator>()
+                .HasIndex(i => i.Name)
                 .IsUnique();
         }
     }

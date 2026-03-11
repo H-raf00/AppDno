@@ -1,8 +1,9 @@
 ﻿namespace AppDnoApi.Entities
 {
-    public class Suppliers
+    public class Supplier
     {
-        public string Name { get; set; } = string.Empty;
+        public int Id { get; set; }
+        public string Name { get; set; } = null!;
 
         public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }

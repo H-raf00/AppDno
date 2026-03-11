@@ -1,11 +1,10 @@
 ﻿namespace AppDnoApi.Entities
 {
-    public class Client
+    public class Indicator
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-
-        public List<Project> Projets { get; set; } = new List<Project>();
-
+        public string? Description { get; set; }
+        public string Type { get; set; } = null!;
     }
 }
