@@ -13,7 +13,7 @@
             <div
                 class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600 flex items-center justify-center"
             >
-            icon
+                icon
             </div>
         </div>
 
@@ -21,7 +21,7 @@
         <nav class="flex-1 flex flex-col items-center gap-2">
             <Button
                 class="w-10 h-10 flex items-center justify-center text-gray-400 hover:bg-gray-50 rounded-lg transition-colors"
-            >ici
+                >ici
             </Button>
         </nav>
     </aside>
@@ -31,24 +31,23 @@
         <!-- Top Header -->
         <header
             class="h-14 border-b border-gray-100 flex items-center justify-between px-6"
-        >
-        </header>
+        ></header>
 
         <!-- Page Content -->
         <div class="flex-1 p-6">
             <!-- Page Title -->
             <div class="flex items-center gap-3 mb-6">
-
-                <h1 class="text-2xl font-semibold text-gray-900">
-                    NOM DE LA PAGE
-                </h1>
+                <h1 class="text-2xl font-semibold text-gray-900">AppDno</h1>
             </div>
 
-            <!-- Empty Content Area -->
+            <!-- Content Area -->
             <div class="flex-1">
-
-                {@render children()}
-                
+                <!-- top bar -->
+                <div></div>
+                <!-- main content -->
+                <div>
+                    {@render children()}
+                </div>
             </div>
         </div>
     </main>
