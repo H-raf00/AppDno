@@ -19,7 +19,10 @@ namespace AppDnoApi.Database
 
         // All DbSets in one place
         public DbSet<User> Users { get; set; } = null!;
-        //public DbSet<Ingredient> Ingredients { get; set; } = null!;
+        public DbSet<Client> Clients { get; set; } = null!;
+        public DbSet<Ingredient> Ingredients { get; set; } = null!;
+        public DbSet<Suppliers> Suppliers { get; set; } = null!;
+        public DbSet<Project> Projects { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
