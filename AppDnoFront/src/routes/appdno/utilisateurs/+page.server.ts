@@ -1,11 +1,11 @@
 export async function load({ fetch }) {
   try {
     const response = await fetch('http://localhost:5143/api/users');
-    const clients = await response.json();
-    return { clients };
+    const users = await response.json();
+    return { users };
   } catch (error) {
-    console.error('Error fetching clients:', error);
+    console.error('Error fetching users:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return { clients: [], error: errorMessage };
+    return { users: [], error: errorMessage };
   }
 }
