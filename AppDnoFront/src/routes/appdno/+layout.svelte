@@ -1,6 +1,30 @@
 <script lang="ts">
     import { Button } from "$lib/components/ui/button/index.js";
+    import { goto } from "$app/navigation";
+    import { page } from "$app/state";
+
     let { children } = $props();
+
+    let selectedMenu = $state("tableau-de-bord");
+
+    const menuItems = [
+        { id: "tableau-de-bord", label: "Tableau de bord", href: "/appdno" },
+        { id: "utilisateurs", label: "Utilisateurs", href: "/appdno/utilisateurs" },
+        { id: "clients", label: "Clients", href: "/appdno/clients" },
+        { id: "projets", label: "Projets Clients", href: "/appdno/projets" },
+        { id: "fournisseurs", label: "Fournisseurs d'ingrédients", href: "/appdno/fournisseurs" },
+        { id: "ingredients", label: "Base d'ingrédients", href: "/appdno/ingredients" },
+        { id: "ingredients-valider", label: "Ingrédients à valider", href: "/appdno/ingredients/pending" },
+        { id: "indicateurs", label: "Base d'indicateurs", href: "/appdno/indicators" },
+    ];
+
+    $effect(() => {
+        const currentPath = page.url.pathname;
+        const item = menuItems.find(m => m.href === currentPath);
+        if (item) {
+            selectedMenu = item.id;
+        }
+    });
 </script>
 
 <div class="flex h-screen">
@@ -43,7 +67,25 @@
             <!-- Content Area -->
             <div class="flex-1">
                 <!-- top bar -->
-                <div></div>
+                <div class="">
+                    <div class="flex border-b-2 border-gray-300">
+                        {#each menuItems as item}
+                            <button
+                                class={`pb-2 px-4 border-b-2 transition-colors ${
+                                    selectedMenu === item.id
+                                        ? "border-red-500"
+                                        : "border-transparent"
+                                }`}
+                                onclick={() => {
+                                    selectedMenu = item.id;
+                                    goto(item.href);
+                                }}
+                            >
+                                {item.label}
+                            </button>
+                        {/each}
+                    </div>
+                </div>
                 <!-- main content -->
                 <div>
                     {@render children()}
