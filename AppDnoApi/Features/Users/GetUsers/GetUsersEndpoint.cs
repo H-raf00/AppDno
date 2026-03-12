@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Users.GetUsers;
 
-public class CreateUserEndpoint : EndpointWithoutRequest<List<GetUsersInfoResponse>>
+public class GetUsersEndpoint : EndpointWithoutRequest<List<GetUserResponse>>
 {
 
 
     private readonly AppDnoDbContext _DbContext;
-    public CreateUserEndpoint(AppDnoDbContext dbContext)
+    public GetUsersEndpoint(AppDnoDbContext dbContext)
     {
         _DbContext = dbContext;
     }
@@ -22,8 +22,8 @@ public class CreateUserEndpoint : EndpointWithoutRequest<List<GetUsersInfoRespon
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        List<GetUsersInfoResponse> users = await _DbContext.Users
-            .Select(u => new GetUsersInfoResponse
+        List<GetUserResponse> users = await _DbContext.Users
+            .Select(u => new GetUserResponse
             {
                 LastName = u.LastName,
                 Role = u.Role,
@@ -32,7 +32,8 @@ public class CreateUserEndpoint : EndpointWithoutRequest<List<GetUsersInfoRespon
             })
             .ToListAsync(ct);
 
-
-        Response = users;
+        //Response = users;
+        await Send.OkAsync(users);
+        
     }
 }

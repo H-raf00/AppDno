@@ -1,6 +1,6 @@
 using AppDnoApi.Entities;
 
-public class GetUsersInfoResponse
+public class GetUserResponse
 {
     public string LastName { get; set; } = string.Empty;
     public Role Role { get; set; } = 0;
