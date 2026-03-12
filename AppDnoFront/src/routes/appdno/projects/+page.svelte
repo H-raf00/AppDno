@@ -1,1 +1,8 @@
-<h1>Projets</h1>
+<script lang="ts">
+ import DataTable from "./data-table.svelte";
+ import { columns } from "./columns.js";
+ 
+ let { data } = $props();
+</script>
+
+<DataTable data={data.projects} {columns} />
