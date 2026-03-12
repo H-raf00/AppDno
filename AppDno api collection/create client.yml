@@ -1,16 +1,16 @@
 info:
-  name: create a user using email
+  name: create client
   type: http
-  seq: 2
+  seq: 4
 
 http:
   method: POST
-  url: http://localhost:5143/api/user
+  url: http://localhost:5143/api/client
   body:
     type: json
     data: |-
       {
-        "Email" : "test2@t.t"
+        "Name" : "Nom Client"
       }
   auth: inherit
 
