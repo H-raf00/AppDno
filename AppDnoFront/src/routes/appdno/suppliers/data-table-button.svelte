@@ -3,13 +3,13 @@
     import { DataTableButton } from "$lib/components/ui/data-table-button/index.js";
 
     interface Props {
-        userId: number;
+        supplierId: number;
     }
 
-    let { userId }: Props = $props();
+    let { supplierId }: Props = $props();
 
     const handleNavigate = () => {
-        goto(`/appdno/users/${userId}`);
+        goto(`/appdno/suppliers/${supplierId}`);
     };
 </script>
 
