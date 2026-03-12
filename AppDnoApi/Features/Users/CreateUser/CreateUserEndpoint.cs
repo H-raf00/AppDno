@@ -1,6 +1,5 @@
 using AppDnoApi.Database;
 using AppDnoApi.Entities;
-using AppDnoApi.Features.Users.GetUsers;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Users.CreateUser;

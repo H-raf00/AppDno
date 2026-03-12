@@ -2,28 +2,27 @@ using AppDnoApi.Database;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppDnoApi.Features.Users.GetUsers;
+namespace AppDnoApi.Features.Users.GetAllUsers;
 
-public class GetUsersEndpoint : EndpointWithoutRequest<List<GetUserResponse>>
+public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersResponse>>
 {
-
-
-    private readonly AppDnoDbContext _DbContext;
-    public GetUsersEndpoint(AppDnoDbContext dbContext)
+    private readonly AppDnoDbContext _dbContext;
+    
+    public GetAllUsersEndpoint(AppDnoDbContext dbContext)
     {
-        _DbContext = dbContext;
+        _dbContext = dbContext;
     }
 
     public override void Configure()
     {
-        Get("/api/users");
+        Get("/api/user/all");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        List<GetUserResponse> users = await _DbContext.Users
-            .Select(u => new GetUserResponse
+        List<GetAllUsersResponse> users = await _dbContext.Users
+            .Select(u => new GetAllUsersResponse
             {
                 Id = u.Id,
                 LastName = u.LastName,
@@ -33,8 +32,6 @@ public class GetUsersEndpoint : EndpointWithoutRequest<List<GetUserResponse>>
             })
             .ToListAsync(ct);
 
-        //Response = users;
         await Send.OkAsync(users);
-        
     }
 }
