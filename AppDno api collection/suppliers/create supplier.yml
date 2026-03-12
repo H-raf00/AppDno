@@ -1,16 +1,16 @@
 info:
-  name: create client
+  name: create supplier
   type: http
-  seq: 4
+  seq: 3
 
 http:
   method: POST
-  url: http://localhost:5143/api/client
+  url: http://localhost:5143/api/supplier
   body:
     type: json
     data: |-
       {
-        "Name" : "Nom Client"
+        "Name" : "supplier 1"
       }
   auth: inherit
 

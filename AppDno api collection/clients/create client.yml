@@ -1,0 +1,21 @@
+info:
+  name: create client
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5143/api/client
+  body:
+    type: json
+    data: |-
+      {
+        "Name" : "Nom Client"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
