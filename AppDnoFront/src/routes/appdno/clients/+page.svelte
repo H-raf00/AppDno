@@ -5,4 +5,4 @@
  let { data } = $props();
 </script>
  
-<DataTable data={data.users} {columns} />
+<DataTable data={data.clients} {columns} />

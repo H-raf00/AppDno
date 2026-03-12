@@ -1,6 +1,6 @@
 export async function load({ fetch }) {
   try {
-    const response = await fetch('http://localhost:5143/api/users');
+    const response = await fetch('http://localhost:5143/api/user/all');
     const users = await response.json();
     return { users };
   } catch (error) {
