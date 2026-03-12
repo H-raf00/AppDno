@@ -5,7 +5,6 @@ using FastEndpoints;
 
 namespace AppDnoApi.Features.Users.CreateUser;
 
-// GetUserResponse is in GetUser, am I still respecting the vertical slice architecture?
 public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
 {
     private readonly AppDnoDbContext _DbContext;
@@ -28,7 +27,7 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse
         await _DbContext.SaveChangesAsync(ct);
 
 
-        var response = new GetUserResponse
+        var response = new CreateUserResponse
         {
             LastName = user.LastName,
             Role = user.Role,
