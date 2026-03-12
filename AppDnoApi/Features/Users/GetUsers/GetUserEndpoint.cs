@@ -26,6 +26,7 @@ namespace AppDnoApi.Features.Users.GetUsers
                 .Where(u => u.Id == id)
                 .Select(u => new GetUserResponse
                 {
+                    Id = u.Id,
                     LastName = u.LastName,
                     Role = u.Role,
                     Group = u.Group,

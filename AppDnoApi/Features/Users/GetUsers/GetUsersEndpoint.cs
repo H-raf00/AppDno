@@ -25,6 +25,7 @@ public class GetUsersEndpoint : EndpointWithoutRequest<List<GetUserResponse>>
         List<GetUserResponse> users = await _DbContext.Users
             .Select(u => new GetUserResponse
             {
+                Id = u.Id,
                 LastName = u.LastName,
                 Role = u.Role,
                 Group = u.Group,
