@@ -1,5 +1,5 @@
 <script lang="ts">
- import DataTable from "../../../lib/components/ui/data-table-personal/data-table.svelte";
+ import DataTable from "./data-table.svelte";
  import { columns } from "./columns.js";
  
  let { data } = $props();

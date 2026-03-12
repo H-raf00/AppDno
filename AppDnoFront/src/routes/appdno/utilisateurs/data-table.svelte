@@ -11,6 +11,8 @@
         data: TData[];
     };
 
+    let paddingLeft = $state("pl-6");
+
     let { data, columns }: DataTableProps<TData, TValue> = $props();
 
     const table = createSvelteTable({
@@ -22,13 +24,13 @@
     });
 </script>
 
-<div class="rounded-md border">
+<div class="rounded-md border shadow-md">
     <Table.Root>
-        <Table.Header>
+        <Table.Header class="bg-[#F1F5F9]">
             {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
                 <Table.Row>
-                    {#each headerGroup.headers as header (header.id)}
-                        <Table.Head colspan={header.colSpan}>
+                    {#each headerGroup.headers as header, index (header.id)}
+                        <Table.Head colspan={header.colSpan} class={index === 0 ? paddingLeft : ""}>
                             {#if !header.isPlaceholder}
                                 <FlexRender
                                     content={header.column.columnDef.header}
@@ -43,8 +45,8 @@
         <Table.Body>
             {#each table.getRowModel().rows as row (row.id)}
                 <Table.Row data-state={row.getIsSelected() && "selected"}>
-                    {#each row.getVisibleCells() as cell (cell.id)}
-                        <Table.Cell>
+                    {#each row.getVisibleCells() as cell, index (cell.id)}
+                        <Table.Cell class={index === 0 ? paddingLeft : ""}>
                             <FlexRender
                                 content={cell.column.columnDef.cell}
                                 context={cell.getContext()}

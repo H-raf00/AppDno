@@ -1,6 +1,9 @@
 import type { ColumnDef } from "@tanstack/table-core";
+import { renderComponent } from "$lib/components/ui/data-table/index.js";
+import DataTableButton from "./data-table-button.svelte";
 
 export type User = {
+    id : number;
     lastName: string;
     role: string;
     group: string;
@@ -23,5 +26,12 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: "projectNumber",
         header: "Nombre de projets",
+    },
+    {
+        id: "actions",
+        cell: ({ row }) =>
+            renderComponent(DataTableButton, {
+                userId: row.original.id,
+            }),
     },
 ];
