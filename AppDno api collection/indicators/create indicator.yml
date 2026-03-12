@@ -1,16 +1,17 @@
 info:
-  name: create client
+  name: create indicator
   type: http
-  seq: 1
+  seq: 3
 
 http:
   method: POST
-  url: http://localhost:5143/api/client
+  url: http://localhost:5143/api/indicator
   body:
     type: json
     data: |-
       {
-        "Name" : "client 2"
+        "Name" : "ind2",
+        "Type" : "int"
       }
   auth: inherit
 

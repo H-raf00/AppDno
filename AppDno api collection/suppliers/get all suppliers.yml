@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5143/api/client/all
+  url: http://localhost:5143/api/supplier/all
   auth: inherit
 
 settings:

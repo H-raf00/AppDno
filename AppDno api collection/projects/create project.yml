@@ -1,16 +1,19 @@
 info:
-  name: create client
+  name: create project
   type: http
-  seq: 1
+  seq: 3
 
 http:
   method: POST
-  url: http://localhost:5143/api/client
+  url: http://localhost:5143/api/project
   body:
     type: json
     data: |-
       {
-        "Name" : "client 2"
+        "Code" : "XZ56515F",
+        "Name" : "projet 2",
+        "ResponsableId" : 2,
+        "ClientId" : 1
       }
   auth: inherit
 
