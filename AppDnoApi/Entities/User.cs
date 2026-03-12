@@ -26,17 +26,18 @@
             Email = email;
         }
 
-        public User(string email, string firstName, string lastName, Role role)
+        public User(string email, string firstName, string lastName, Role role, string group)
         {
             Email = email;
             FirstName = firstName;
             LastName = lastName;
             Role = role;
+            Group = group;
         }
 
         protected User() { }
 
-        public int GetProjectNumber()
+        public int GetProjectsNumber()
         {
             return Projets.Count;
         }

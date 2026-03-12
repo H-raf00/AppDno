@@ -21,18 +21,12 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse
     
     public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)
     {
-        var user = new User(req.Email);
+        var user = new User(req.Email, req.FirstName, req.LastName, req.Role, req.Group);
         _DbContext.Users.Add(user);
         await _DbContext.SaveChangesAsync(ct);
 
 
-        var response = new CreateUserResponse
-        {
-            LastName = user.LastName,
-            Role = user.Role,
-            Group = user.Group,
-            ProjectNumber = user.GetProjectNumber()
-        };
+        var response = new CreateUserResponse(user.FirstName, user.LastName, user.Role, user.Group, user.GetProjectsNumber());
 
         await Send.CreatedAtAsync<CreateUserEndpoint>(new {id = user.Id}, response);
     }

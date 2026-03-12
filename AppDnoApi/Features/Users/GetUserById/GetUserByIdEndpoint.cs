@@ -31,7 +31,7 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
                 LastName = u.LastName,
                 Role = u.Role,
                 Group = u.Group,
-                ProjectNumber = u.GetProjectNumber()
+                ProjectsNumber = u.GetProjectsNumber()
             })
             .FirstOrDefaultAsync(ct);
 

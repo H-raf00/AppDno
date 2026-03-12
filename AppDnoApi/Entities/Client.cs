@@ -7,5 +7,10 @@
 
         public List<Project> Projets { get; set; } = new List<Project>();
 
+        public Client(string name)
+        {
+            Name = name;
+        }
+
     }
 }

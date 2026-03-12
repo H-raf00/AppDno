@@ -28,7 +28,7 @@ public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersRespon
                 LastName = u.LastName,
                 Role = u.Role,
                 Group = u.Group,
-                ProjectNumber = u.GetProjectNumber()
+                ProjectsNumber = u.GetProjectsNumber()
             })
             .ToListAsync(ct);
 

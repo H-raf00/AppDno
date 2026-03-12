@@ -6,17 +6,15 @@ public class CreateUserRequest
     [Required(ErrorMessage = "L'email est obligatoire.")]
     [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "L'email n'est pas valide.")]
     public string Email { get; set; } = null!;
-    /*
-    public string? Password { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? Group { get; set; }
+    
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string Group { get; set; } = string.Empty;
     public Role Role { get; set; } = Role.USER;
-    */
-    public CreateUserRequest(string email) 
-    {
-        Email = email;
-    }
+
+    //public string? Password { get; set; }
+
+
     /*
     public CreateUserRequest(string email, string? password, string? firstName, string? lastName, string? group, Role role)
     {
