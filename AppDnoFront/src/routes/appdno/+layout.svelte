@@ -11,7 +11,7 @@
         { id: "tableau-de-bord", label: "Tableau de bord", href: "/appdno" },
         { id: "utilisateurs", label: "Utilisateurs", href: "/appdno/users" },
         { id: "clients", label: "Clients", href: "/appdno/clients" },
-        { id: "projets", label: "Projets Clients", href: "/appdno/projects" },
+        { id: "projets", label: "Projets", href: "/appdno/projects" },
         { id: "fournisseurs", label: "Fournisseurs d'ingrédients", href: "/appdno/suppliers" },
         { id: "ingredients", label: "Base d'ingrédients", href: "/appdno/ingredients" },
         { id: "ingredients-valider", label: "Ingrédients à valider", href: "/appdno/ingredients/pending" },

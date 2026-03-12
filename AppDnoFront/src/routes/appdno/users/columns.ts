@@ -7,7 +7,7 @@ export type User = {
     lastName: string;
     role: string;
     group: string;
-    projectNumber: number;
+    projectsNumber: number;
 };
 
 export const columns: ColumnDef<User>[] = [
@@ -18,13 +18,17 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: "role",
         header: "Rôle",
+        cell: ({ getValue }) => {
+            const role = getValue();
+            return role === 0 ? "admin" : "user";
+        },
     },
     {
         accessorKey: "group",
         header: "Groupe",
     },
     {
-        accessorKey: "projectNumber",
+        accessorKey: "projectsNumber",
         header: "Nombre de projets",
     },
     {
