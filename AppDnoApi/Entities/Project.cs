@@ -6,7 +6,7 @@
         public string Code { get; set; } = null!;
         public string Name { get; set; } = null!;
 
-        public string ResponsableEmail { get; set; } = null!;
+        public int ResponsableId { get; set; }
         public User Responsable { get; set; } = null!;
         
         public List<User> Users { get; set; } = new List<User>();

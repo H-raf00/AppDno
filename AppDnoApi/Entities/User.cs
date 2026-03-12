@@ -1,5 +1,4 @@
-﻿
-namespace AppDnoApi.Entities
+﻿namespace AppDnoApi.Entities
 {
     public enum Role
     {
@@ -9,30 +8,38 @@ namespace AppDnoApi.Entities
 
     public class User
     {
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        public int Id { get; set; }
         
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Password { get; set; } = "";
+
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
 
         public Role Role { get; set; } = Role.USER;
-        public string Group { get; set; } = null!;
+        public string Group { get; set; } = "";
 
         public List<Project> Projets { get; set; } = new List<Project>();
 
-        public User(string email, string password,string firstName, string lastName, Role role, string group)
+        public User(string email)
         {
             Email = email;
-            Password = password;
+        }
+
+        public User(string email, string firstName, string lastName, Role role)
+        {
+            Email = email;
             FirstName = firstName;
             LastName = lastName;
             Role = role;
-            Group = group;
         }
 
-        // Parameterless constructor required by EF Core when it can't use constructor binding
         protected User() { }
 
+        public int GetProjectNumber()
+        {
+            return Projets.Count;
+        }
     }
 }
 

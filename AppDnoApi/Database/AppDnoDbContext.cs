@@ -25,10 +25,9 @@ namespace AppDnoApi.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             
-            modelBuilder.Entity<User>()
-                .HasKey(u => u.Email);
-            
+            // Ajoutez un index unique sur Email
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
@@ -39,8 +38,8 @@ namespace AppDnoApi.Database
             
             modelBuilder.Entity<Project>()
                 .HasOne(p => p.Responsable)
-                .WithMany() // Un User peut être responsable de plusieurs projets
-                .HasForeignKey(p => p.ResponsableEmail)
+                .WithMany()
+                .HasForeignKey(p => p.ResponsableId)
                 .OnDelete(DeleteBehavior.Restrict);
             
             modelBuilder.Entity<Project>()
