@@ -11,7 +11,7 @@
         <!-- Logo -->
         <div class="mb-6">
             <div
-                class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600 flex items-center justify-center"
+                class="w-10 h-10 rounded-xl bg-linear-to-br from-orange-400 via-pink-500 to-purple-600 flex items-center justify-center"
             >
                 icon
             </div>
