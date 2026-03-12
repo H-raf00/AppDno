@@ -12,5 +12,10 @@
             Name = name;
         }
 
+        public int getProjectsNumber()
+        {
+            return Projets.Count;
+        }
+
     }
 }

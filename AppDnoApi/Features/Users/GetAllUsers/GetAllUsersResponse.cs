@@ -6,7 +6,7 @@ public class GetAllUsersResponse
 {
     public int Id { get; set; }
     public string LastName { get; set; } = string.Empty;
-    public Role Role { get; set; }
+    public Role Role { get; set; } = Role.USER;
     public string Group { get; set; } = string.Empty;
     public int ProjectsNumber { get; set; }
 }

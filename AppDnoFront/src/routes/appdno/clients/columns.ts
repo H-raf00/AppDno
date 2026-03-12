@@ -4,17 +4,17 @@ import DataTableButton from "./data-table-button.svelte";
 
 export type Client = {
     id : number;
-    Name: string;
-    projectNumber: number;
+    name: string;
+    projectsNumber: number;
 };
 
 export const columns: ColumnDef<Client>[] = [
     {
-        accessorKey: "Name",
+        accessorKey: "name",
         header: "Nom",
     },
     {
-        accessorKey: "projectNumber",
+        accessorKey: "projectsNumber",
         header: "Nombre de projets",
     },
     {

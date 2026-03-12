@@ -1,6 +1,5 @@
 ﻿using AppDnoApi.Database;
 using AppDnoApi.Features.Clients.GetAllClient;
-using AppDnoApi.Features.Users.GetAllUsers;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,15 +22,16 @@ namespace AppDnoApi.Features.Clients.GetClient
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<GetAllClientsResponse> users = await _dbContext.Clients
+            List<GetAllClientsResponse> clients = await _dbContext.Clients
                 .Select(c => new GetAllClientsResponse
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    ProjectsNumber = c.getProjectsNumber()
                 })
                 .ToListAsync(ct);
 
-            await Send.OkAsync(users);
+            await Send.OkAsync(clients);
         }
     }
 }
