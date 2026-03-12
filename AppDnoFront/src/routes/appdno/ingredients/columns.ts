@@ -5,12 +5,27 @@ import DataTableButton from "./data-table-button.svelte";
 export type Ingredient = {
     id: number;
     name: string;
+    supplierId: number;
+    supplierName: string;
+    projectsNumber: number;
 };
 
 export const columns: ColumnDef<Ingredient>[] = [
     {
         accessorKey: "name",
         header: "Nom",
+    },
+    {
+        accessorKey: "supplierId",
+        header: "ID Fournisseur",
+    },
+    {
+        accessorKey: "supplierName",
+        header: "Fournisseur",
+    },
+    {
+        accessorKey: "projectsNumber",
+        header: "Nombre de projets",
     },
     {
         id: "actions",
