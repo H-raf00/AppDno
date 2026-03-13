@@ -29,7 +29,7 @@ namespace AppDnoApi.Features.Indicators.GetIndicatorById
                 {
                     Id = i.Id,
                     Name = i.Name,
-                    Description = i.Description,
+                    Description = i.Description ?? "",
                     Type = i.Type
                 })
                 .FirstOrDefaultAsync(ct);

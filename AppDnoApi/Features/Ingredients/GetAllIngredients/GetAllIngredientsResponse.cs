@@ -4,7 +4,7 @@ namespace AppDnoApi.Features.Ingredients.GetAllIngredients
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
         public string SupplierName { get; set; } = string.Empty;
         public int ProjectsNumber { get; set; } = 0;
     }

@@ -40,8 +40,9 @@ namespace AppDnoApi.Database
                 .HasOne(p => p.Responsable)
                 .WithMany()
                 .HasForeignKey(p => p.ResponsableId)
-                .OnDelete(DeleteBehavior.Restrict);
-            
+                .OnDelete(DeleteBehavior.SetNull);
+            //.OnDelete(DeleteBehavior.Restrict); // Should the Project be deleted if the Responsable is deleted? 
+
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Users)
                 .WithMany(u => u.Projets)
@@ -51,8 +52,9 @@ namespace AppDnoApi.Database
                 .HasOne(p => p.Client)
                 .WithMany(c => c.Projets)
                 .HasForeignKey(p => p.ClientId)
-                .OnDelete(DeleteBehavior.Restrict);
-            
+                .OnDelete(DeleteBehavior.SetNull);
+            //.OnDelete(DeleteBehavior.Restrict); // Should the Project be deleted if the Client is deleted? Or should the ClientId just be set to null?
+
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Ingredients)
                 .WithMany(i => i.Projects)
@@ -62,8 +64,8 @@ namespace AppDnoApi.Database
                 .HasOne(i => i.Supplier)
                 .WithMany(s => s.Ingredients)
                 .HasForeignKey(i => i.SupplierId)
-                .OnDelete(DeleteBehavior.Restrict);
-            
+                .OnDelete(DeleteBehavior.SetNull); // If the supplier is deleted, set the SupplierId to null
+
             modelBuilder.Entity<Ingredient>()
                 .HasIndex(i => i.Name)
                 .IsUnique();

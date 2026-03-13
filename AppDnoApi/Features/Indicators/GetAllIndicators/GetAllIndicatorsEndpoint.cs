@@ -26,7 +26,7 @@ namespace AppDnoApi.Features.Indicators.GetAllIndicators
                 {
                     Id = i.Id,
                     Name = i.Name,
-                    Description = i.Description,
+                    Description = i.Description ?? "",
                     Type = i.Type
                 })
                 .ToListAsync(ct);

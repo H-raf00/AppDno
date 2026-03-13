@@ -11,7 +11,7 @@ namespace AppDnoApi.Features.Projects.CreateProject
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = "Le responsable est obligatoire.")]
-        public int ResponsableId { get; set; }
+        public int? ResponsableId { get; set; }
 
         [Required(ErrorMessage = "Le client est obligatoire.")]
         public int ClientId { get; set; }

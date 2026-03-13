@@ -8,6 +8,6 @@ namespace AppDnoApi.Features.Ingredients.CreateIngredient
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = "Le fournisseur est obligatoire.")]
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace AppDnoApi.Features.Ingredients.CreateIngredient
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public int SupplierId { get; set; }
+        public int? SupplierId { get; set; }
     }
 }

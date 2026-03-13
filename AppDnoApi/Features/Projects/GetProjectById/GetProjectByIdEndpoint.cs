@@ -33,7 +33,6 @@ namespace AppDnoApi.Features.Projects.GetProjectById
                     Code = p.Code,
                     Name = p.Name,
                     ResponsableId = p.ResponsableId,
-                    ResponsableName = p.Responsable.LastName,
                     ClientId = p.ClientId,
                     ClientName = p.Client.Name,
                     UsersNumber = p.Users.Count,

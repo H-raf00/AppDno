@@ -30,7 +30,6 @@ namespace AppDnoApi.Features.Projects.GetAllProjects
                     Code = p.Code,
                     Name = p.Name,
                     ResponsableId = p.ResponsableId,
-                    ResponsableName = p.Responsable.LastName,
                     ClientId = p.ClientId,
                     ClientName = p.Client.Name,
                     UsersNumber = p.Users.Count,
