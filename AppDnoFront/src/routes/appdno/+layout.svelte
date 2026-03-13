@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button } from "$lib/components/ui/button/index.js";
+    import { Button } from "$lib/components/ui/button";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
 

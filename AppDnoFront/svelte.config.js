@@ -14,3 +14,10 @@ const config = {
 };
 
 export default config;
+
+
+
+
+
+// adapteur static
+// ssr = false

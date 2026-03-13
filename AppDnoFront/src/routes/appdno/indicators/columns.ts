@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/table-core";
-import { renderComponent } from "$lib/components/ui/data-table/index.js";
-import DataTableButton from "./data-table-button.svelte";
+import { renderComponent } from "$lib/components/ui/data-table";
+import { DataTableButton } from "$lib/components/ui/data-table-button";
 
 export type Indicator = {
     id: number;
@@ -26,7 +26,7 @@ export const columns: ColumnDef<Indicator>[] = [
         id: "actions",
         cell: ({ row }) =>
             renderComponent(DataTableButton, {
-                indicatorId: row.original.id,
+                route: `/appdno/indicators/${row.original.id}`,
             }),
     },
 ];

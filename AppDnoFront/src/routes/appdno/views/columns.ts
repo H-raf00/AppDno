@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/table-core";
-import { renderComponent } from "$lib/components/ui/data-table/index.js";
-import DataTableButton from "./data-table-button.svelte";
+import { renderComponent } from "$lib/components/ui/data-table";
+import { DataTableButton } from "$lib/components/ui/data-table-button";
 
 // what is a view?
 export type View = {
@@ -17,7 +17,7 @@ export const columns: ColumnDef<View>[] = [
         id: "actions",
         cell: ({ row }) =>
             renderComponent(DataTableButton, {
-                viewId: row.original.id,
+                route: `/appdno/views/${row.original.id}`,
             }),
     },
 ];

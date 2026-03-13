@@ -1,6 +1,6 @@
 <script lang="ts" generics="TData, TValue">
     import { type ColumnDef } from "@tanstack/table-core";
-    import { DataTable } from "$lib/components/ui/data-table/index.js";
+    import { DataTable } from "$lib/components/ui/data-table";
 
     type DataTableProps<TData, TValue> = {
         columns: ColumnDef<TData, TValue>[];
