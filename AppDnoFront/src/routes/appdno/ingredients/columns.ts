@@ -20,10 +20,6 @@ export const columns: ColumnDef<Ingredient>[] = [
         header: "ID Fournisseur",
     },
     {
-        accessorKey: "supplierName",
-        header: "Fournisseur",
-    },
-    {
         accessorKey: "projectsNumber",
         header: "Nombre de projets",
     },

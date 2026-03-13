@@ -7,10 +7,7 @@ export type Project = {
     code: string;
     name: string;
     responsableId: number;
-    responsableName: string;
     clientId: number;
-    clientName: string;
-    usersNumber: number;
     ingredientsNumber: number;
 };
 
@@ -24,20 +21,16 @@ export const columns: ColumnDef<Project>[] = [
         header: "Nom",
     },
     {
-        accessorKey: "responsableName",
-        header: "Responsable",
+        accessorKey: "responsableId",
+        header: "Responsable Id",
     },
     {
-        accessorKey: "clientName",
-        header: "Client",
-    },
-    {
-        accessorKey: "usersNumber",
-        header: "Utilisateurs",
+        accessorKey: "clientId",
+        header: "Client Id",
     },
     {
         accessorKey: "ingredientsNumber",
-        header: "Ingrédients",
+        header: "Nombre d'ingrédients",
     },
     {
         id: "actions",

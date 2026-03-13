@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "Email" : "t3@t.t",
-        "FirstName" : "name3",
-        "LastName" : "lname3",
-        "Group" : "paris",
-        "Role" : 1
+        "Email" : "admin@t.t",
+        "FirstName" : "nom",
+        "LastName" : "prenom",
+        "Group" : "avignon",
+        "Role" : 0
       }
   auth: inherit
 

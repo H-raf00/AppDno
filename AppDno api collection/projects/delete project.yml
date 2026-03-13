@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:5143/api/project
+  url: http://localhost:5143/api/project/6
   auth: inherit
 
 runtime:

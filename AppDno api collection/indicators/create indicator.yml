@@ -10,8 +10,9 @@ http:
     type: json
     data: |-
       {
-        "Name" : "ind56146",
-        "Type" : "int"
+        "Name" : "desc",
+        "Description" : "azeatgzgregretjhnryj",
+        "Type" : "ph"
       }
   auth: inherit
 

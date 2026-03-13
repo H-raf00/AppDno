@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/table-core";
 import { renderComponent } from "$lib/components/ui/data-table/index.js";
 import DataTableButton from "./data-table-button.svelte";
 
+// what is a view?
 export type View = {
     id: number;
     name: string;

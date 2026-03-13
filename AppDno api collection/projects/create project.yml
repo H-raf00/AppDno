@@ -12,8 +12,8 @@ http:
       {
         "Code" : "XZ56515F",
         "Name" : "projet 56465",
-        "ResponsableId" : 3,
-        "ClientId" : 2
+        "ResponsableId" : 2,
+        "ClientId" : 3
       }
   auth: inherit
 
