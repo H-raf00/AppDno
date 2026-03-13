@@ -7,7 +7,7 @@ namespace AppDnoApi.Features.Clients.GetClientById;
 public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdResponse>
 {
     private readonly AppDnoDbContext _dbContext;
-    
+
     public GetClientByIdEndpoint(AppDnoDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -25,12 +25,16 @@ public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdRespons
 
         var client = await _dbContext.Clients
             .Where(c => c.Id == id)
-            .Select(c => new GetClientByIdResponse
-            {
-                Id = c.Id,
-                Name = c.Name,
-                ProjectsNumber = c.getProjectsNumber()
-            })
+            .GroupJoin(
+                _dbContext.Projects,
+                c => c.Id,
+                p => p.ClientId,
+                (client, projects) => new GetClientByIdResponse
+                {
+                    Id = client.Id,
+                    Name = client.Name,
+                    ProjectsNumber = projects.Count()
+                })
             .FirstOrDefaultAsync(ct);
 
         if (client == null)

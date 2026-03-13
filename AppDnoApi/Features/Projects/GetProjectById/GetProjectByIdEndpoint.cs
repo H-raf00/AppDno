@@ -24,20 +24,20 @@ namespace AppDnoApi.Features.Projects.GetProjectById
             int id = Route<int>("id");
 
             var project = await _dbContext.Projects
-                .Include(p => p.Responsable)
-                .Include(p => p.Client)
                 .Where(p => p.Id == id)
-                .Select(p => new GetProjectByIdResponse
-                {
-                    Id = p.Id,
-                    Code = p.Code,
-                    Name = p.Name,
-                    ResponsableId = p.ResponsableId,
-                    ClientId = p.ClientId,
-                    ClientName = p.Client.Name,
-                    UsersNumber = p.Users.Count,
-                    IngredientsNumber = p.Ingredients.Count
-                })
+                .GroupJoin(
+                    _dbContext.Ingredients,
+                    p => p.Id,
+                    i => i.Id,
+                    (project, ingredients) => new GetProjectByIdResponse
+                    {
+                        Id = project.Id,
+                        Code = project.Code,
+                        Name = project.Name,
+                        ResponsableId = project.ResponsableId,
+                        ClientId = project.ClientId,
+                        IngredientsNumber = ingredients.Count()
+                    })
                 .FirstOrDefaultAsync(ct);
 
             if (project == null)

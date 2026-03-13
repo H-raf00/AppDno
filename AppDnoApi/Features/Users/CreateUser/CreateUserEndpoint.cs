@@ -26,7 +26,7 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse
         await _DbContext.SaveChangesAsync(ct);
 
 
-        var response = new CreateUserResponse(user.FirstName, user.LastName, user.Role, user.Group, user.GetProjectsNumber());
+        var response = new CreateUserResponse(user.FirstName, user.LastName, user.Role, user.Group);
 
         await Send.CreatedAtAsync<CreateUserEndpoint>(new {id = user.Id}, response);
     }

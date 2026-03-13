@@ -22,13 +22,17 @@ namespace AppDnoApi.Features.Clients.GetClient
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<GetAllClientsResponse> clients = await _dbContext.Clients
-                .Select(c => new GetAllClientsResponse
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ProjectsNumber = c.getProjectsNumber()
-                })
+            var clients = await _dbContext.Clients
+                .GroupJoin(
+                    _dbContext.Projects,
+                    c => c.Id,
+                    p => p.ClientId,
+                    (client, projects) => new GetAllClientsResponse
+                    {
+                        Id = client.Id,
+                        Name = client.Name,
+                        ProjectsNumber = projects.Count()
+                    })
                 .ToListAsync(ct);
 
             await Send.OkAsync(clients);

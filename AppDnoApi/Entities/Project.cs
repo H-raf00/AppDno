@@ -6,14 +6,15 @@
         public string Code { get; set; } = null!;
         public string Name { get; set; } = null!;
 
+        public List<User>? Users { get; set; }
+
         public int? ResponsableId { get; set; }
-        public User Responsable { get; set; } = null!;
-        
-        public List<User> Users { get; set; } = new List<User>();
+        public User? Responsable { get; set; }
 
         public int ClientId { get; set; }
-        public Client Client { get; set; } = null!;
-        
-        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        public Client? Client { get; set; }
+
+        public List<Ingredient>? Ingredients { get; set; }
+
     }
 }

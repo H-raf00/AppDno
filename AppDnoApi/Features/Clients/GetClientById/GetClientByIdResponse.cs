@@ -4,5 +4,5 @@ public class GetClientByIdResponse
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public int ProjectsNumber { get; set; } = 0;
+    public int ProjectsNumber { get; set; }
 }

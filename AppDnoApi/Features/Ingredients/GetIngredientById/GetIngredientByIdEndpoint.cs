@@ -24,16 +24,18 @@ namespace AppDnoApi.Features.Ingredients.GetIngredientById
             int id = Route<int>("id");
 
             var ingredient = await _dbContext.Ingredients
-                .Include(i => i.Supplier)
                 .Where(i => i.Id == id)
-                .Select(i => new GetIngredientByIdResponse
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    SupplierId = i.SupplierId,
-                    SupplierName = i.Supplier.Name,
-                    ProjectsNumber = i.Projects.Count
-                })
+                .GroupJoin(
+                    _dbContext.Projects,
+                    i => i.Id,
+                    p => p.Id,
+                    (ingredient, projects) => new GetIngredientByIdResponse
+                    {
+                        Id = ingredient.Id,
+                        Name = ingredient.Name,
+                        SupplierId = ingredient.SupplierId,
+                        ProjectsNumber = projects.Count()
+                    })
                 .FirstOrDefaultAsync(ct);
 
             if (ingredient == null)

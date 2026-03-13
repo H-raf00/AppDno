@@ -22,12 +22,16 @@ namespace AppDnoApi.Features.Suppliers.GetAllSuppliers
         public override async Task HandleAsync(CancellationToken ct)
         {
             List<GetAllSuppliersResponse> suppliers = await _dbContext.Suppliers
-                .Select(s => new GetAllSuppliersResponse
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    IngredientsNumber = s.Ingredients.Count
-                })
+                .GroupJoin(
+                    _dbContext.Ingredients,
+                    s => s.Id,
+                    i => i.SupplierId,
+                    (supplier, ingredients) => new GetAllSuppliersResponse
+                    {
+                        Id = supplier.Id,
+                        Name = supplier.Name,
+                        IngredientsNumber = ingredients.Count()
+                    })
                 .ToListAsync(ct);
 
             await Send.OkAsync(suppliers);

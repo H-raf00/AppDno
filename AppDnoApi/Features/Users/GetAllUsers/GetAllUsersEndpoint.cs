@@ -21,16 +21,21 @@ public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersRespon
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        List<GetAllUsersResponse> users = await _dbContext.Users
-            .Select(u => new GetAllUsersResponse
-            {
-                Id = u.Id,
-                LastName = u.LastName,
-                Role = u.Role,
-                Group = u.Group,
-                ProjectsNumber = u.GetProjectsNumber()
-            })
-            .ToListAsync(ct);
+        var users = await _dbContext.Users
+                .GroupJoin(
+                    _dbContext.Projects,
+                    u => u.Id,
+                    p => p.ResponsableId,
+                    (user, projects) => new GetAllUsersResponse
+                    {
+                        Id = user.Id,
+                        LastName = user.LastName,
+                        Role = user.Role,
+                        Group = user.Group,
+                        ProjectsNumber = projects.Count()
+                    })
+                .ToListAsync(ct);
+
 
         await Send.OkAsync(users);
     }

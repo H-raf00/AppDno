@@ -5,16 +5,10 @@
         public int Id { get; set; }
         public string Name { get; set; } = null!;
 
-        public List<Project> Projets { get; set; } = new List<Project>();
-
+        public List<Project>? Projets { get; set; }
         public Client(string name)
         {
             Name = name;
-        }
-
-        public int getProjectsNumber()
-        {
-            return Projets.Count;
         }
 
     }

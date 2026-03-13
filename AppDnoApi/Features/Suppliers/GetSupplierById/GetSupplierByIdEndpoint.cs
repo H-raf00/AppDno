@@ -25,12 +25,16 @@ namespace AppDnoApi.Features.Suppliers.GetSupplierById
 
             var supplier = await _dbContext.Suppliers
                 .Where(s => s.Id == id)
-                .Select(s => new GetSupplierByIdResponse
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    IngredientsNumber = s.Ingredients.Count
-                })
+                .GroupJoin(
+                    _dbContext.Ingredients,
+                    s => s.Id,
+                    i => i.SupplierId,
+                    (supplier, ingredients) => new GetSupplierByIdResponse
+                    {
+                        Id = supplier.Id,
+                        Name = supplier.Name,
+                        IngredientsNumber = ingredients.Count()
+                    })
                 .FirstOrDefaultAsync(ct);
 
             if (supplier == null)

@@ -19,7 +19,7 @@
         public Role Role { get; set; } = Role.USER;
         public string Group { get; set; } = "";
 
-        public List<Project> Projets { get; set; } = new List<Project>();
+        public List<Project>? Projets { get; set; }
 
         public User(string email)
         {
@@ -37,10 +37,7 @@
 
         protected User() { }
 
-        public int GetProjectsNumber()
-        {
-            return Projets.Count;
-        }
+
     }
 }
 

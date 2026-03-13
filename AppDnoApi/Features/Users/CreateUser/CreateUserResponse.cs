@@ -7,14 +7,11 @@ public class CreateUserResponse
     public Role Role { get; set; } = 0;
     public string Group { get; set; } = string.Empty;
 
-    public int ProjectsNumber { get; set; } = 0;
-
-    public CreateUserResponse(string firstName, string lastName, Role role, string group, int projectsNumber)
+    public CreateUserResponse(string firstName, string lastName, Role role, string group)
     {
         FirstName = firstName;
         LastName = lastName;
         Role = role;
         Group = group;
-        ProjectsNumber = projectsNumber;
     }
 }

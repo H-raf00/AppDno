@@ -23,16 +23,21 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
     {
         int id = Route<int>("id");
 
+
         var user = await _dbContext.Users
             .Where(u => u.Id == id)
-            .Select(u => new GetUserByIdResponse
-            {
-                Id = u.Id,
-                LastName = u.LastName,
-                Role = u.Role,
-                Group = u.Group,
-                ProjectsNumber = u.GetProjectsNumber()
-            })
+            .GroupJoin(
+                _dbContext.Projects,
+                u => u.Id,
+                p => p.ClientId,
+                (user, projects) => new GetUserByIdResponse
+                {
+                    Id = user.Id,
+                    LastName = user.LastName,
+                    Role = user.Role,
+                    Group = user.Group,
+                    ProjectsNumber = projects.Count()
+                })
             .FirstOrDefaultAsync(ct);
 
         if (user == null)
