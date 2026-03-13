@@ -18,11 +18,19 @@ public class Program
         // builder.Services.AddControllers();
 
         builder.Services.AddFastEndpoints();
-        
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
         builder.Services.AddDbContext<AppDnoDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+        });
 
 
         var app = builder.Build();
@@ -37,6 +45,7 @@ public class Program
         //app.UseAuthorization();
         //app.MapControllers();
 
+        app.UseCors("AllowAll");
         app.UseFastEndpoints();
         app.Run();
     }

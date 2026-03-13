@@ -23,3 +23,8 @@ pending ingredients
 
 dans le front, ce crée un interface puis je récupere les données ou pas
 
+
+
+
+Loading http://localhost:5143/api/client/all using `window.fetch`. For best results, use the `fetch` that is passed to your `load` function: https://svelte.dev/docs/kit/load#making-fetch-requests
+

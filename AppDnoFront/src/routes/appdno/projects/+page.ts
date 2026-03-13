@@ -1,4 +1,4 @@
-export async function load({ fetch }) {
+export async function load() {
   try {
     const response = await fetch('http://localhost:5143/api/project/all');
     const projects = await response.json();
