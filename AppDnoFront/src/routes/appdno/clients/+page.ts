@@ -1,4 +1,4 @@
-export async function load() {
+export async function load({ fetch }) {
   try {
     const response = await fetch('http://localhost:5143/api/client/all');
     const clients = await response.json();
