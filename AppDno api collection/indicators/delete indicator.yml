@@ -5,7 +5,7 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:5143/api/indicator/8
+  url: http://localhost:5143/api/indicator/3
   auth: inherit
 
 runtime:

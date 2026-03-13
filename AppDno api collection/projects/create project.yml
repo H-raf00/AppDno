@@ -11,9 +11,9 @@ http:
     data: |-
       {
         "Code" : "XZ56515F",
-        "Name" : "projet 2",
-        "ResponsableId" : 2,
-        "ClientId" : 1
+        "Name" : "projet 56465",
+        "ResponsableId" : 3,
+        "ClientId" : 2
       }
   auth: inherit
 
