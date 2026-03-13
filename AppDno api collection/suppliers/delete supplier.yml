@@ -1,0 +1,20 @@
+info:
+  name: delete supplier
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: http://localhost:5143/api/supplier/8
+  auth: inherit
+
+runtime:
+  variables:
+    - name: ""
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
