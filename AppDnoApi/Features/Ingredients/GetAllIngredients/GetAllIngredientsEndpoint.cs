@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Ingredients.GetAllIngredients
 {
     public class GetAllIngredientsEndpoint : EndpointWithoutRequest<List<GetAllIngredientsResponse>>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetAllIngredientsEndpoint(AppDnoDbContext dbContext)
+        public GetAllIngredientsEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -21,21 +20,17 @@ namespace AppDnoApi.Features.Ingredients.GetAllIngredients
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<GetAllIngredientsResponse> ingredients = await _dbContext.Ingredients
-                .GroupJoin(
-                    _dbContext.Projects,
-                    i => i.Id,
-                    p => p.Id,
-                    (ingredient, projects) => new GetAllIngredientsResponse
-                    {
-                        Id = ingredient.Id,
-                        Name = ingredient.Name,
-                        SupplierId = ingredient.SupplierId,
-                        ProjectsNumber = projects.Count()
-                    })
-                .ToListAsync(ct);
+            var ingredients = await _repository.GetAllIngredientsAsync(ct);
 
-            await Send.OkAsync(ingredients);
+            var response = ingredients.Select(ingredient => new GetAllIngredientsResponse
+            {
+                Id = ingredient.Id,
+                Name = ingredient.Name,
+                SupplierId = ingredient.SupplierId,
+                ProjectsNumber = ingredient.Projects?.Count ?? 0
+            }).ToList();
+
+            await Send.OkAsync(response);
         }
     }
 }

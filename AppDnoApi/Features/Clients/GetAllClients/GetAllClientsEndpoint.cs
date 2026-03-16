@@ -1,17 +1,16 @@
-﻿using AppDnoApi.Database;
-using AppDnoApi.Features.Clients.GetAllClient;
+﻿using AppDnoApi.Features.Clients.GetAllClient;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Clients.GetClient
 {
     public class GetAllClientsEndpoint : EndpointWithoutRequest<List<GetAllClientsResponse>>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetAllClientsEndpoint(AppDnoDbContext dbContext)
+        public GetAllClientsEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -22,20 +21,16 @@ namespace AppDnoApi.Features.Clients.GetClient
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            var clients = await _dbContext.Clients
-                .GroupJoin(
-                    _dbContext.Projects,
-                    c => c.Id,
-                    p => p.ClientId,
-                    (client, projects) => new GetAllClientsResponse
-                    {
-                        Id = client.Id,
-                        Name = client.Name,
-                        ProjectsNumber = projects.Count()
-                    })
-                .ToListAsync(ct);
+            var clients = await _repository.GetAllClientsAsync(ct);
 
-            await Send.OkAsync(clients);
+            var response = clients.Select(client => new GetAllClientsResponse
+            {
+                Id = client.Id,
+                Name = client.Name,
+                ProjectsNumber = client.Projets?.Count ?? 0
+            }).ToList();
+
+            await Send.OkAsync(response);
         }
     }
 }

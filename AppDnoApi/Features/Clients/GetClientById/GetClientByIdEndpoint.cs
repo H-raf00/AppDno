@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Clients.GetClientById;
 
 public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdResponse>
 {
-    private readonly AppDnoDbContext _dbContext;
+    private readonly IAppDnoRepository _repository;
 
-    public GetClientByIdEndpoint(AppDnoDbContext dbContext)
+    public GetClientByIdEndpoint(IAppDnoRepository repository)
     {
-        _dbContext = dbContext;
+        _repository = repository;
     }
 
     public override void Configure()
@@ -23,19 +22,7 @@ public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdRespons
     {
         int id = Route<int>("id");
 
-        var client = await _dbContext.Clients
-            .Where(c => c.Id == id)
-            .GroupJoin(
-                _dbContext.Projects,
-                c => c.Id,
-                p => p.ClientId,
-                (client, projects) => new GetClientByIdResponse
-                {
-                    Id = client.Id,
-                    Name = client.Name,
-                    ProjectsNumber = projects.Count()
-                })
-            .FirstOrDefaultAsync(ct);
+        var client = await _repository.GetClientByIdAsync(id, ct);
 
         if (client == null)
         {
@@ -43,6 +30,13 @@ public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdRespons
             return;
         }
 
-        await Send.OkAsync(client);
+        var response = new GetClientByIdResponse
+        {
+            Id = client.Id,
+            Name = client.Name,
+            ProjectsNumber = client.Projets?.Count ?? 0
+        };
+
+        await Send.OkAsync(response);
     }
 }

@@ -11,6 +11,7 @@ namespace AppDnoApi.Database
         {
             if (!options.IsConfigured)
             {
+                // Not safe, maybe i will change it later
                 options.UseNpgsql("Host=localhost;Database=mydatabase;Username=postgres;Password=postgrespw");
             }
         }

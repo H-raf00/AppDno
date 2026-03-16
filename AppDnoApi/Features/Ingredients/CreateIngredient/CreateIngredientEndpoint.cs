@@ -1,16 +1,16 @@
-using AppDnoApi.Database;
 using AppDnoApi.Entities;
+using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Ingredients.CreateIngredient
 {
     public class CreateIngredientEndpoint : Endpoint<CreateIngredientRequest, CreateIngredientResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public CreateIngredientEndpoint(AppDnoDbContext dbContext)
+        public CreateIngredientEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -27,8 +27,7 @@ namespace AppDnoApi.Features.Ingredients.CreateIngredient
                 SupplierId = req.SupplierId
             };
 
-            _dbContext.Ingredients.Add(ingredient);
-            await _dbContext.SaveChangesAsync(ct);
+            await _repository.CreateIngredientAsync(ingredient, ct);
 
             var response = new CreateIngredientResponse
             {

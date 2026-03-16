@@ -1,17 +1,16 @@
-﻿using AppDnoApi.Database;
-using AppDnoApi.Entities;
-using AppDnoApi.Features.Users.CreateUser;
+﻿using AppDnoApi.Entities;
+using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Clients.CreateClient
 {
     public class CreateClientEndpoint : Endpoint<CreateClientRequest, CreateClientResponse>
     {
-        private readonly AppDnoDbContext _DbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public CreateClientEndpoint(AppDnoDbContext dbContext)
+        public CreateClientEndpoint(IAppDnoRepository repository)
         {
-            _DbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -23,9 +22,7 @@ namespace AppDnoApi.Features.Clients.CreateClient
         public override async Task HandleAsync(CreateClientRequest req, CancellationToken ct)
         {
             var client = new Client(req.Name);
-            _DbContext.Clients.Add(client);
-            await _DbContext.SaveChangesAsync(ct);
-
+            await _repository.CreateClientAsync(client, ct);
 
             var response = new CreateClientResponse
             {

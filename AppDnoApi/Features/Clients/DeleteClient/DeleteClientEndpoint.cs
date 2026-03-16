@@ -1,15 +1,15 @@
-﻿using AppDnoApi.Database;
+﻿using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Clients.DeleteClient
 {
     public class DeleteClientEndpoint : Ep.NoReq.NoRes
     {
-        private readonly AppDnoDbContext _DbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public DeleteClientEndpoint(AppDnoDbContext dbContext)
+        public DeleteClientEndpoint(IAppDnoRepository repository)
         {
-            _DbContext = dbContext;
+            _repository = repository;
         }
 
 
@@ -23,18 +23,17 @@ namespace AppDnoApi.Features.Clients.DeleteClient
         {
             if (!int.TryParse(Route<string>("id"), out var id))
             {
-                await Send.StatusCodeAsync(400, ct); // Can be improved?
+                await Send.StatusCodeAsync(400, ct);
                 return;
             }
 
-            var client = await _DbContext.Clients.FindAsync(new object[] { id }, ct);
-            if (client is null)
+            var deleted = await _repository.DeleteClientAsync(id, ct);
+            if (!deleted)
             {
                 await Send.NotFoundAsync(ct);
                 return;
             }
-            _DbContext.Clients.Remove(client);
-            await _DbContext.SaveChangesAsync(ct);
+
             await Send.NoContentAsync(ct);
         }
     }

@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Ingredients.GetIngredientById
 {
     public class GetIngredientByIdEndpoint : EndpointWithoutRequest<GetIngredientByIdResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetIngredientByIdEndpoint(AppDnoDbContext dbContext)
+        public GetIngredientByIdEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -23,20 +22,7 @@ namespace AppDnoApi.Features.Ingredients.GetIngredientById
         {
             int id = Route<int>("id");
 
-            var ingredient = await _dbContext.Ingredients
-                .Where(i => i.Id == id)
-                .GroupJoin(
-                    _dbContext.Projects,
-                    i => i.Id,
-                    p => p.Id,
-                    (ingredient, projects) => new GetIngredientByIdResponse
-                    {
-                        Id = ingredient.Id,
-                        Name = ingredient.Name,
-                        SupplierId = ingredient.SupplierId,
-                        ProjectsNumber = projects.Count()
-                    })
-                .FirstOrDefaultAsync(ct);
+            var ingredient = await _repository.GetIngredientByIdAsync(id, ct);
 
             if (ingredient == null)
             {
@@ -44,7 +30,15 @@ namespace AppDnoApi.Features.Ingredients.GetIngredientById
                 return;
             }
 
-            await Send.OkAsync(ingredient);
+            var response = new GetIngredientByIdResponse
+            {
+                Id = ingredient.Id,
+                Name = ingredient.Name,
+                SupplierId = ingredient.SupplierId,
+                ProjectsNumber = ingredient.Projects?.Count ?? 0
+            };
+
+            await Send.OkAsync(response);
         }
     }
 }

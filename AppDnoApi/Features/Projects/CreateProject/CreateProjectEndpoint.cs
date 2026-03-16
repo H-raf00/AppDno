@@ -1,16 +1,16 @@
-using AppDnoApi.Database;
 using AppDnoApi.Entities;
+using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Projects.CreateProject
 {
     public class CreateProjectEndpoint : Endpoint<CreateProjectRequest, CreateProjectResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public CreateProjectEndpoint(AppDnoDbContext dbContext)
+        public CreateProjectEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -29,8 +29,7 @@ namespace AppDnoApi.Features.Projects.CreateProject
                 ClientId = req.ClientId
             };
 
-            _dbContext.Projects.Add(project);
-            await _dbContext.SaveChangesAsync(ct);
+            await _repository.CreateProjectAsync(project, ct);
 
             var response = new CreateProjectResponse
             {

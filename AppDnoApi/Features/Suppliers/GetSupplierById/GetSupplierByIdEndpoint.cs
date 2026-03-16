@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Suppliers.GetSupplierById
 {
     public class GetSupplierByIdEndpoint : EndpointWithoutRequest<GetSupplierByIdResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetSupplierByIdEndpoint(AppDnoDbContext dbContext)
+        public GetSupplierByIdEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -23,19 +22,7 @@ namespace AppDnoApi.Features.Suppliers.GetSupplierById
         {
             int id = Route<int>("id");
 
-            var supplier = await _dbContext.Suppliers
-                .Where(s => s.Id == id)
-                .GroupJoin(
-                    _dbContext.Ingredients,
-                    s => s.Id,
-                    i => i.SupplierId,
-                    (supplier, ingredients) => new GetSupplierByIdResponse
-                    {
-                        Id = supplier.Id,
-                        Name = supplier.Name,
-                        IngredientsNumber = ingredients.Count()
-                    })
-                .FirstOrDefaultAsync(ct);
+            var supplier = await _repository.GetSupplierByIdAsync(id, ct);
 
             if (supplier == null)
             {
@@ -43,7 +30,14 @@ namespace AppDnoApi.Features.Suppliers.GetSupplierById
                 return;
             }
 
-            await Send.OkAsync(supplier);
+            var response = new GetSupplierByIdResponse
+            {
+                Id = supplier.Id,
+                Name = supplier.Name,
+                IngredientsNumber = supplier.Ingredients?.Count ?? 0
+            };
+
+            await Send.OkAsync(response);
         }
     }
 }

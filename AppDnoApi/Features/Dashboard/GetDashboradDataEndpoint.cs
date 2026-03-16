@@ -1,17 +1,15 @@
-﻿using AppDnoApi.Database;
-using AppDnoApi.Entities;
+﻿using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Dashboard
 {
     public class GetDashboradDataEndpoint : EndpointWithoutRequest<GetDashboardDataResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetDashboradDataEndpoint(AppDnoDbContext dbContext)
+        public GetDashboradDataEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -22,22 +20,16 @@ namespace AppDnoApi.Features.Dashboard
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-
+            var (totalProjects, totalClients, totalIngredients, totalPendingIngredients) = 
+                await _repository.GetDashboardDataAsync(ct);
 
             var dashboardData = new GetDashboardDataResponse
             {
-                TotalProjects = await _dbContext.Projects.CountAsync(ct),
-                TotalClients = await _dbContext.Clients.CountAsync(ct),
-                TotalIngredients = await _dbContext.Ingredients.CountAsync(ct),
-                TotalPendingIngredients = await _dbContext.Ingredients.Where(i => i.Status == IngredientStatus.Pending).CountAsync(ct)
+                TotalProjects = totalProjects,
+                TotalClients = totalClients,
+                TotalIngredients = totalIngredients,
+                TotalPendingIngredients = totalPendingIngredients
             };
-
-
-            if (dashboardData == null)
-            {
-                await Send.NotFoundAsync();
-                return;
-            }
 
             await Send.OkAsync(dashboardData);
         }

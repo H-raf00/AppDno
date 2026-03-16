@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Users.GetUserById;
 
 public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
 {
-    private readonly AppDnoDbContext _dbContext;
-    
-    public GetUserByIdEndpoint(AppDnoDbContext dbContext)
+    private readonly IAppDnoRepository _repository;
+
+    public GetUserByIdEndpoint(IAppDnoRepository repository)
     {
-        _dbContext = dbContext;
+        _repository = repository;
     }
 
     public override void Configure()
@@ -23,22 +22,7 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
     {
         int id = Route<int>("id");
 
-
-        var user = await _dbContext.Users
-            .Where(u => u.Id == id)
-            .GroupJoin(
-                _dbContext.Projects,
-                u => u.Id,
-                p => p.ClientId,
-                (user, projects) => new GetUserByIdResponse
-                {
-                    Id = user.Id,
-                    LastName = user.LastName,
-                    Role = user.Role,
-                    Group = user.Group,
-                    ProjectsNumber = projects.Count()
-                })
-            .FirstOrDefaultAsync(ct);
+        var user = await _repository.GetUserByIdAsync(id, ct);
 
         if (user == null)
         {
@@ -46,6 +30,15 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
             return;
         }
 
-        await Send.OkAsync(user);
+        var response = new GetUserByIdResponse
+        {
+            Id = user.Id,
+            LastName = user.LastName,
+            Role = user.Role,
+            Group = user.Group,
+            ProjectsNumber = user.Projets?.Count ?? 0
+        };
+
+        await Send.OkAsync(response);
     }
 }

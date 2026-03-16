@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Indicators.GetIndicatorById
 {
     public class GetIndicatorByIdEndpoint : EndpointWithoutRequest<GetIndicatorByIdResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetIndicatorByIdEndpoint(AppDnoDbContext dbContext)
+        public GetIndicatorByIdEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -23,16 +22,7 @@ namespace AppDnoApi.Features.Indicators.GetIndicatorById
         {
             int id = Route<int>("id");
 
-            var indicator = await _dbContext.Indicators
-                .Where(i => i.Id == id)
-                .Select(i => new GetIndicatorByIdResponse
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Description = i.Description ?? "",
-                    Type = i.Type
-                })
-                .FirstOrDefaultAsync(ct);
+            var indicator = await _repository.GetIndicatorByIdAsync(id, ct);
 
             if (indicator == null)
             {
@@ -40,7 +30,15 @@ namespace AppDnoApi.Features.Indicators.GetIndicatorById
                 return;
             }
 
-            await Send.OkAsync(indicator);
+            var response = new GetIndicatorByIdResponse
+            {
+                Id = indicator.Id,
+                Name = indicator.Name,
+                Description = indicator.Description ?? "",
+                Type = indicator.Type
+            };
+
+            await Send.OkAsync(response);
         }
     }
 }

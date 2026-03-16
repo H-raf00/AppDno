@@ -1,16 +1,16 @@
-using AppDnoApi.Database;
 using AppDnoApi.Entities;
+using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Indicators.CreateIndicator
 {
     public class CreateIndicatorEndpoint : Endpoint<CreateIndicatorRequest, CreateIndicatorResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public CreateIndicatorEndpoint(AppDnoDbContext dbContext)
+        public CreateIndicatorEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -28,8 +28,7 @@ namespace AppDnoApi.Features.Indicators.CreateIndicator
                 Type = req.Type
             };
 
-            _dbContext.Indicators.Add(indicator);
-            await _dbContext.SaveChangesAsync(ct);
+            await _repository.CreateIndicatorAsync(indicator, ct);
 
             var response = new CreateIndicatorResponse
             {

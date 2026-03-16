@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Projects.GetProjectById
 {
     public class GetProjectByIdEndpoint : EndpointWithoutRequest<GetProjectByIdResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetProjectByIdEndpoint(AppDnoDbContext dbContext)
+        public GetProjectByIdEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -23,22 +22,7 @@ namespace AppDnoApi.Features.Projects.GetProjectById
         {
             int id = Route<int>("id");
 
-            var project = await _dbContext.Projects
-                .Where(p => p.Id == id)
-                .GroupJoin(
-                    _dbContext.Ingredients,
-                    p => p.Id,
-                    i => i.Id,
-                    (project, ingredients) => new GetProjectByIdResponse
-                    {
-                        Id = project.Id,
-                        Code = project.Code,
-                        Name = project.Name,
-                        ResponsableId = project.ResponsableId,
-                        ClientId = project.ClientId,
-                        IngredientsNumber = ingredients.Count()
-                    })
-                .FirstOrDefaultAsync(ct);
+            var project = await _repository.GetProjectByIdAsync(id, ct);
 
             if (project == null)
             {
@@ -46,7 +30,17 @@ namespace AppDnoApi.Features.Projects.GetProjectById
                 return;
             }
 
-            await Send.OkAsync(project);
+            var response = new GetProjectByIdResponse
+            {
+                Id = project.Id,
+                Code = project.Code,
+                Name = project.Name,
+                ResponsableId = project.ResponsableId,
+                ClientId = project.ClientId,
+                IngredientsNumber = project.Ingredients?.Count ?? 0
+            };
+
+            await Send.OkAsync(response);
         }
     }
 }

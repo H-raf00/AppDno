@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Users.GetAllUsers;
 
 public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersResponse>>
 {
-    private readonly AppDnoDbContext _dbContext;
-    
-    public GetAllUsersEndpoint(AppDnoDbContext dbContext)
+    private readonly IAppDnoRepository _repository;
+
+    public GetAllUsersEndpoint(IAppDnoRepository repository)
     {
-        _dbContext = dbContext;
+        _repository = repository;
     }
 
     public override void Configure()
@@ -21,22 +20,17 @@ public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersRespon
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var users = await _dbContext.Users
-                .GroupJoin(
-                    _dbContext.Projects,
-                    u => u.Id,
-                    p => p.ResponsableId,
-                    (user, projects) => new GetAllUsersResponse
-                    {
-                        Id = user.Id,
-                        LastName = user.LastName,
-                        Role = user.Role,
-                        Group = user.Group,
-                        ProjectsNumber = projects.Count()
-                    })
-                .ToListAsync(ct);
+        var users = await _repository.GetAllUsersAsync(ct);
 
+        var response = users.Select(user => new GetAllUsersResponse
+        {
+            Id = user.Id,
+            LastName = user.LastName,
+            Role = user.Role,
+            Group = user.Group,
+            ProjectsNumber = user.Projets?.Count ?? 0
+        }).ToList();
 
-        await Send.OkAsync(users);
+        await Send.OkAsync(response);
     }
 }

@@ -1,15 +1,15 @@
-﻿using AppDnoApi.Database;
+﻿using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Ingredients.DeleteIngredient
 {
     public class DeleteIngredientEndpoint : Ep.NoReq.NoRes
     {
-        private readonly AppDnoDbContext _DbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public DeleteIngredientEndpoint(AppDnoDbContext dbContext)
+        public DeleteIngredientEndpoint(IAppDnoRepository repository)
         {
-            _DbContext = dbContext;
+            _repository = repository;
         }
 
 
@@ -23,18 +23,17 @@ namespace AppDnoApi.Features.Ingredients.DeleteIngredient
         {
             if (!int.TryParse(Route<string>("id"), out var id))
             {
-                await Send.StatusCodeAsync(400, ct); // Can be improved?
+                await Send.StatusCodeAsync(400, ct);
                 return;
             }
 
-            var ingredient = await _DbContext.Ingredients.FindAsync(new object[] { id }, ct);
-            if (ingredient is null)
+            var deleted = await _repository.DeleteIngredientAsync(id, ct);
+            if (!deleted)
             {
                 await Send.NotFoundAsync(ct);
                 return;
             }
-            _DbContext.Ingredients.Remove(ingredient);
-            await _DbContext.SaveChangesAsync(ct);
+
             await Send.NoContentAsync(ct);
         }
     }

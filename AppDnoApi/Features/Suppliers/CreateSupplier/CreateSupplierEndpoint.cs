@@ -1,16 +1,16 @@
-using AppDnoApi.Database;
 using AppDnoApi.Entities;
+using AppDnoApi.Interface;
 using FastEndpoints;
 
 namespace AppDnoApi.Features.Suppliers.CreateSupplier
 {
     public class CreateSupplierEndpoint : Endpoint<CreateSupplierRequest, CreateSupplierResponse>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public CreateSupplierEndpoint(AppDnoDbContext dbContext)
+        public CreateSupplierEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -26,8 +26,7 @@ namespace AppDnoApi.Features.Suppliers.CreateSupplier
                 Name = req.Name
             };
 
-            _dbContext.Suppliers.Add(supplier);
-            await _dbContext.SaveChangesAsync(ct);
+            await _repository.CreateSupplierAsync(supplier, ct);
 
             var response = new CreateSupplierResponse
             {

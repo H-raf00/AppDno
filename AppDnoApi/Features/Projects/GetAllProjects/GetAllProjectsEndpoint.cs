@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Projects.GetAllProjects
 {
     public class GetAllProjectsEndpoint : EndpointWithoutRequest<List<GetAllProjectsResponse>>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetAllProjectsEndpoint(AppDnoDbContext dbContext)
+        public GetAllProjectsEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -21,23 +20,19 @@ namespace AppDnoApi.Features.Projects.GetAllProjects
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<GetAllProjectsResponse> projects = await _dbContext.Projects
-                .GroupJoin(
-                    _dbContext.Ingredients,
-                    p => p.Id,
-                    i => i.Id,
-                    (project, ingredients) => new GetAllProjectsResponse
-                    {
-                        Id = project.Id,
-                        Code = project.Code,
-                        Name = project.Name,
-                        ResponsableId = project.ResponsableId,
-                        ClientId = project.ClientId,
-                        IngredientsNumber = ingredients.Count()
-                    })
-                .ToListAsync(ct);
+            var projects = await _repository.GetAllProjectsAsync(ct);
 
-            await Send.OkAsync(projects);
+            var response = projects.Select(project => new GetAllProjectsResponse
+            {
+                Id = project.Id,
+                Code = project.Code,
+                Name = project.Name,
+                ResponsableId = project.ResponsableId,
+                ClientId = project.ClientId,
+                IngredientsNumber = project.Ingredients?.Count ?? 0
+            }).ToList();
+
+            await Send.OkAsync(response);
         }
     }
 }

@@ -1,16 +1,15 @@
-using AppDnoApi.Database;
+using AppDnoApi.Interface;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace AppDnoApi.Features.Indicators.GetAllIndicators
 {
     public class GetAllIndicatorsEndpoint : EndpointWithoutRequest<List<GetAllIndicatorsResponse>>
     {
-        private readonly AppDnoDbContext _dbContext;
+        private readonly IAppDnoRepository _repository;
 
-        public GetAllIndicatorsEndpoint(AppDnoDbContext dbContext)
+        public GetAllIndicatorsEndpoint(IAppDnoRepository repository)
         {
-            _dbContext = dbContext;
+            _repository = repository;
         }
 
         public override void Configure()
@@ -21,17 +20,17 @@ namespace AppDnoApi.Features.Indicators.GetAllIndicators
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<GetAllIndicatorsResponse> indicators = await _dbContext.Indicators
-                .Select(i => new GetAllIndicatorsResponse
-                {
-                    Id = i.Id,
-                    Name = i.Name,
-                    Description = i.Description ?? "",
-                    Type = i.Type
-                })
-                .ToListAsync(ct);
+            var indicators = await _repository.GetAllIndicatorsAsync(ct);
 
-            await Send.OkAsync(indicators);
+            var response = indicators.Select(i => new GetAllIndicatorsResponse
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Description = i.Description ?? "",
+                Type = i.Type
+            }).ToList();
+
+            await Send.OkAsync(response);
         }
     }
 }
