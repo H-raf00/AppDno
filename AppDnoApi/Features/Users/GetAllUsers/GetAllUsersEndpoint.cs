@@ -28,7 +28,7 @@ public class GetAllUsersEndpoint : EndpointWithoutRequest<List<GetAllUsersRespon
             LastName = user.LastName,
             Role = user.Role,
             Group = user.Group,
-            ProjectsNumber = user.Projets?.Count ?? 0
+            ProjectsNumber = user.Projects?.Count ?? 0
         }).ToList();
 
         await Send.OkAsync(response);

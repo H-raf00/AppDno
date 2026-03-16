@@ -19,7 +19,7 @@
         public Role Role { get; set; } = Role.USER;
         public string Group { get; set; } = "";
 
-        public List<Project>? Projets { get; set; }
+        public List<Project>? Projects { get; set; }
 
         public User(string email)
         {

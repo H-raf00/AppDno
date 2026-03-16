@@ -46,7 +46,7 @@ namespace AppDnoApi.Database
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Users)
-                .WithMany(u => u.Projets)
+                .WithMany(u => u.Projects)
                 .UsingEntity(j => j.ToTable("ProjectUsers"));
             
             modelBuilder.Entity<Project>()

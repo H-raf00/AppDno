@@ -35,7 +35,7 @@ export const columns: ColumnDef<User>[] = [
         id: "actions",
         cell: ({ row }) =>
             renderComponent(DataTableButton, {
-                route: `/appdno/user/${row.original.id}`,
+                route: `/appdno/users/${row.original.id}`,
             }),
     },
 ];

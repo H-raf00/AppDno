@@ -33,10 +33,12 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
         var response = new GetUserByIdResponse
         {
             Id = user.Id,
+            FirstName = user.FirstName,
             LastName = user.LastName,
+            Email = user.Email,
             Role = user.Role,
             Group = user.Group,
-            ProjectsNumber = user.Projets?.Count ?? 0
+            Projects = user.Projects ?? [],
         };
 
         await Send.OkAsync(response);
