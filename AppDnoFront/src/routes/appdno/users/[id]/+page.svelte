@@ -8,17 +8,17 @@
         { key: "firstName", label: "Prénom" },
         { key: "lastName", label: "Nom" },
         { key: "email", label: "Addresse mail" },
-        { key: "role", label: "Status" },
+        { key: "role", label: "Rôle" },
         { key: "group", label: "Groupe" },
     ];
 
     const userData = data.user || {};
-    const projetsData = userData.Projets || [];
+    const projectsData = userData.projects || [];
 </script>
 
 <div class="mb-4">
     <PersInfoTable object={userData} {fields} route="/appdno/users" />
 </div>
 <div class="mb-4">
-    <CustomDataTable {columns} data={projetsData} />
+    <CustomDataTable {columns} data={projectsData} />
 </div>

@@ -25,7 +25,7 @@ namespace AppDnoApi.Features.Projects.CreateProject
             {
                 Code = req.Code,
                 Name = req.Name,
-                ResponsableId = req.ResponsableId,
+                UserId = req.UserId,
                 ClientId = req.ClientId
             };
 
@@ -36,7 +36,7 @@ namespace AppDnoApi.Features.Projects.CreateProject
                 Id = project.Id,
                 Code = project.Code,
                 Name = project.Name,
-                ResponsableId = project.ResponsableId,
+                UserId = project.UserId,
                 ClientId = project.ClientId
             };
 

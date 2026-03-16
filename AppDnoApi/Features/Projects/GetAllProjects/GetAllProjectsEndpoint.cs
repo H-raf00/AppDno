@@ -27,7 +27,7 @@ namespace AppDnoApi.Features.Projects.GetAllProjects
                 Id = project.Id,
                 Code = project.Code,
                 Name = project.Name,
-                ResponsableId = project.ResponsableId,
+                UserId = project.UserId,
                 ClientId = project.ClientId,
                 IngredientsNumber = project.Ingredients?.Count ?? 0
             }).ToList();

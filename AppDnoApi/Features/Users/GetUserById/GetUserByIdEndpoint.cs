@@ -38,7 +38,13 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
             Email = user.Email,
             Role = user.Role,
             Group = user.Group,
-            Projects = user.Projects ?? [],
+            Projects = user.Projects?.Select(p => new ProjectDto
+            {
+                Id = p.Id,
+                Code = p.Code,
+                Name = p.Name,
+                ClientId = p.ClientId
+            }).ToList() ?? [],
         };
 
         await Send.OkAsync(response);

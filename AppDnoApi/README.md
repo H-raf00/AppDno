@@ -1,6 +1,11 @@
 dotnet ef migrations add comment
 dotnet ef database update
 
+
+Add-Migration comment
+Update-Database
+
+
 # TO DO
 ---> GESTION DES DROITS
 mappers?

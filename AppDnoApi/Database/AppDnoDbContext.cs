@@ -38,17 +38,12 @@ namespace AppDnoApi.Database
                 .IsUnique();
             
             modelBuilder.Entity<Project>()
-                .HasOne(p => p.Responsable)
-                .WithMany()
-                .HasForeignKey(p => p.ResponsableId)
-                .OnDelete(DeleteBehavior.SetNull);
-            //.OnDelete(DeleteBehavior.Restrict); // Should the Project be deleted if the Responsable is deleted? 
-
-            modelBuilder.Entity<Project>()
-                .HasMany(p => p.Users)
+                .HasOne(p => p.User)
                 .WithMany(u => u.Projects)
-                .UsingEntity(j => j.ToTable("ProjectUsers"));
-            
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+            //.OnDelete(DeleteBehavior.Restrict); // Should the Project be deleted if the User is deleted?
+
             modelBuilder.Entity<Project>()
                 .HasOne(p => p.Client)
                 .WithMany(c => c.Projets)

@@ -10,5 +10,13 @@ public class GetUserByIdResponse
     public string Email { get; set; } = string.Empty;
     public Role Role { get; set; }
     public string Group { get; set; } = string.Empty;
-    public List<Project> Projects { get; set; } = [];
+    public List<ProjectDto> Projects { get; set; } = [];
+}
+
+public class ProjectDto
+{
+    public int Id { get; set; }
+    public string Code { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public int ClientId { get; set; }
 }
