@@ -10,7 +10,7 @@ export type Project = {
 export const columns: ColumnDef<Project>[] = [
     {
         accessorKey: "name",
-        header: "Nom",
+        header: "Nom des projets",
     },
     {
         id: "actions",

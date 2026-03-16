@@ -32,8 +32,10 @@ dans le front, ce crée un interface puis je récupere les données ou pas
 
 
 
-// delete button duplication
+TO DO FOR TOMORROW
 
-// adapteur static
-// ssr = false
+fixing the perso page of clients et showing correctly their projects
+
+starting other side pages
+
 
