@@ -1,16 +1,19 @@
 <script lang="ts">
-    import PersInfoTable from "./pers-info-table.svelte";
-    import CustomDataTable from "$lib/components/ui/custom-data-table/custom-data-table.svelte";
-    import { columns } from "./projects-columns.ts";
-    export let data;
+import PersInfoTable from "./pers-info-table.svelte";
+import CustomDataTable from "$lib/components/ui/custom-data-table/custom-data-table.svelte";
+import { columns } from "./projects-columns.ts";
+export let data;
 
-    const fields = [
-        { key: "name", label: "Nom" },
-        { key: "codeClient", label: "Code Client" },
-        { key: "projectsNumber", label: "Nombre de projets" },
-    ];
+const fields = [
+    { key: "name", label: "Nom" },
+    { key: "codeClient", label: "Code Client" },
+    { key: "projectsNumber", label: "Nombre de projets" },
+];
+
+const clientData = data.client || {};
+const projetsData = clientData.Projets || [];
 </script>
 
-<PersInfoTable client={data.client} {fields} />
+<PersInfoTable client={clientData} {fields} />
 
-<CustomDataTable {columns} data={data.client?.Projets || []} />
+<CustomDataTable {columns} data={projetsData} />

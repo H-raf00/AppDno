@@ -11,8 +11,12 @@
         { key: "role", label: "Status" },
         { key: "group", label: "Groupe" },
     ];
+
+    const userData = data.user || {};
+    const projetsData = userData.Projets || [];
+
 </script>
 
-<PersInfoTable user={data.user} {fields} />
+<PersInfoTable user={userData} {fields} />
 
-<CustomDataTable {columns} data={data.user.Projets || []} />
+<CustomDataTable {columns} data={projetsData} />
