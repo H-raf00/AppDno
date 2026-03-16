@@ -2,14 +2,13 @@ import type { ColumnDef } from "@tanstack/table-core";
 import { renderComponent } from "$lib/components/ui/data-table";
 import { DataTableButton } from "$lib/components/ui/data-table-button";
 
-export type Ingredient = {
+export type PendingIngredient = {
     id: number;
     name: string;
     supplierId: number;
-    projectsNumber: number;
 };
 
-export const columns: ColumnDef<Ingredient>[] = [
+export const columns: ColumnDef<PendingIngredient>[] = [
     {
         accessorKey: "name",
         header: "Nom",
@@ -17,10 +16,6 @@ export const columns: ColumnDef<Ingredient>[] = [
     {
         accessorKey: "supplierId",
         header: "ID Fournisseur",
-    },
-    {
-        accessorKey: "projectsNumber",
-        header: "Nombre de projets",
     },
     {
         id: "actions",

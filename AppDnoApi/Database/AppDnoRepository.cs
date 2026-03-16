@@ -2,7 +2,7 @@
 using AppDnoApi.Entities;
 using AppDnoApi.Interface;
 
-/* GetAll*(*) can be optimised by removing the lists returned with it since they are not used but is it Worth it? */
+/* GetAll*(*) can be optimised by removing the lists returned with it since they are not used but is it Worth it? Yes*/
 
 
 namespace AppDnoApi.Database
@@ -157,11 +157,12 @@ namespace AppDnoApi.Database
                 .FirstOrDefaultAsync(i => i.Id == id, ct);
         }
 
-        public async Task<List<Ingredient>> GetAllIngredientsAsync(CancellationToken ct)
+        public async Task<List<Ingredient>> GetAllIngredientsAsync(IngredientStatus status, CancellationToken ct)
         {
             using var db = _appdnoDb.CreateDbContext();
             return await db.Ingredients
                 .Include(i => i.Projects)
+                .Where(i => i.Status == status)
                 .ToListAsync(ct);
         }
 

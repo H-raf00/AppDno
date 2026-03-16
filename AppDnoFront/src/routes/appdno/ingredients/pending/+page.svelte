@@ -1,1 +1,8 @@
-<h1>Ingrédients à valider</h1>
+<script lang="ts">
+ import { CustomDataTable } from "$lib/components/ui/custom-data-table";
+ import { columns } from "./columns.js";
+ 
+ let { data } = $props();
+</script>
+
+<CustomDataTable data={data.pendingIngredients} {columns} />

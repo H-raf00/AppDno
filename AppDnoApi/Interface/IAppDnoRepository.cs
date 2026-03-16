@@ -26,7 +26,7 @@ namespace AppDnoApi.Interface
         // Ingredient Operations
         Task<Ingredient> CreateIngredientAsync(Ingredient ingredient, CancellationToken ct);
         Task<Ingredient?> GetIngredientByIdAsync(int id, CancellationToken ct);
-        Task<List<Ingredient>> GetAllIngredientsAsync(CancellationToken ct);
+        Task<List<Ingredient>> GetAllIngredientsAsync(IngredientStatus status, CancellationToken ct);
         Task<bool> DeleteIngredientAsync(int id, CancellationToken ct);
 
         // Supplier Operations

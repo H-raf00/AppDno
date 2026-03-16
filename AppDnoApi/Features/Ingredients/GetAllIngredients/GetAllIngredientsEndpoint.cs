@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace AppDnoApi.Features.Ingredients.GetAllIngredients
 {
-    public class GetAllIngredientsEndpoint : EndpointWithoutRequest<List<GetAllIngredientsResponse>>
+    public class GetAllIngredientsEndpoint : Endpoint<GetAllIngredientsRequest, List<GetAllIngredientsResponse>>
     {
         private readonly IAppDnoRepository _repository;
 
@@ -18,9 +18,10 @@ namespace AppDnoApi.Features.Ingredients.GetAllIngredients
             AllowAnonymous();
         }
 
-        public override async Task HandleAsync(CancellationToken ct)
+        public override async Task HandleAsync(GetAllIngredientsRequest req, CancellationToken ct)
         {
-            var ingredients = await _repository.GetAllIngredientsAsync(ct);
+            var status = Enum.Parse<Entities.IngredientStatus>(req.Status, ignoreCase: true);
+            var ingredients = await _repository.GetAllIngredientsAsync(status, ct);
 
             var response = ingredients.Select(ingredient => new GetAllIngredientsResponse
             {

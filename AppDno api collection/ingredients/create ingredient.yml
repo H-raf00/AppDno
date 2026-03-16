@@ -11,7 +11,8 @@ http:
     data: |-
       {
         "Name" : "ing8546",
-        "SupplierId" : 1
+        "SupplierId" : 1,
+        "Status" : 1
       }
   auth: inherit
 
