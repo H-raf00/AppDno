@@ -1,5 +1,5 @@
 <script lang="ts">
-    import PersInfoTable from "./pers-info-table.svelte";
+    import PersInfoTable from "$lib/components/ui/pers-info-table/pers-info-table.svelte";
     import CustomDataTable from "$lib/components/ui/custom-data-table/custom-data-table.svelte";
     import { columns } from "./projects-columns.ts";
     export let data;
@@ -14,9 +14,11 @@
 
     const userData = data.user || {};
     const projetsData = userData.Projets || [];
-
 </script>
 
-<PersInfoTable user={userData} {fields} />
-
-<CustomDataTable {columns} data={projetsData} />
+<div class="mb-4">
+    <PersInfoTable object={userData} {fields} route="/appdno/users" />
+</div>
+<div class="mb-4">
+    <CustomDataTable {columns} data={projetsData} />
+</div>

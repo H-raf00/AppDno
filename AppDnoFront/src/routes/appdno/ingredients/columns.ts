@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/table-core";
 import { renderComponent } from "$lib/components/ui/data-table";
-import { DataTableButton } from "$lib/components/ui/data-table-button";
+import { ArrowNavButton } from "$lib/components/ui/arrow-nav-button";
 
 export type Ingredient = {
     id: number;
@@ -25,7 +25,7 @@ export const columns: ColumnDef<Ingredient>[] = [
     {
         id: "actions",
         cell: ({ row }) =>
-            renderComponent(DataTableButton, {
+            renderComponent(ArrowNavButton, {
                 route: `/appdno/ingredients/${row.original.id}`,
             }),
     },

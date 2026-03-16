@@ -67,7 +67,7 @@
             <!-- Content Area -->
             <div class="flex-1">
                 <!-- top bar -->
-                <div class="">
+                <div class="mb-8">
                     <div class="flex border-b-2 border-gray-300">
                         {#each menuItems as item}
                             <button

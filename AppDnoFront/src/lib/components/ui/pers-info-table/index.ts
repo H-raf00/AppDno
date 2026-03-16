@@ -1,0 +1,1 @@
+export { default as PersInfoTable } from './pers-info-table.svelte';

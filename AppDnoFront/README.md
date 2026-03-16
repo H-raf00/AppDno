@@ -49,3 +49,4 @@ You can preview the production build with `npm run preview`.
 # NOTES
 
 I need to improve the way i recieve responses
+Some code is from svelte 3/4 while the other is from 5, it does not cause any problem but later i need to change it. For example using $props instead of export. Need more verification
