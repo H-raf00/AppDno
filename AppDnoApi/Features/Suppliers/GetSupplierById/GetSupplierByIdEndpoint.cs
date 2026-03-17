@@ -34,7 +34,11 @@ namespace AppDnoApi.Features.Suppliers.GetSupplierById
             {
                 Id = supplier.Id,
                 Name = supplier.Name,
-                IngredientsNumber = supplier.Ingredients?.Count ?? 0
+                Ingredients = supplier.Ingredients?.Select(p => new IngredientDto
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                }).ToList() ?? [],
             };
 
             await Send.OkAsync(response);

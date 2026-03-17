@@ -4,6 +4,15 @@ namespace AppDnoApi.Features.Suppliers.GetSupplierById
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public int IngredientsNumber { get; set; } = 0;
+
+        public List<IngredientDto> Ingredients { get; set; } = [];
+    }
+
+    public class IngredientDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }
+
+

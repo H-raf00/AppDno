@@ -46,7 +46,7 @@ namespace AppDnoApi.Database
 
             modelBuilder.Entity<Project>()
                 .HasOne(p => p.Client)
-                .WithMany(c => c.Projets)
+                .WithMany(c => c.Projects)
                 .HasForeignKey(p => p.ClientId)
                 .OnDelete(DeleteBehavior.SetNull);
             //.OnDelete(DeleteBehavior.Restrict); // Should the Project be deleted if the Client is deleted? Or should the ClientId just be set to null?

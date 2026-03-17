@@ -34,7 +34,11 @@ public class GetClientByIdEndpoint : EndpointWithoutRequest<GetClientByIdRespons
         {
             Id = client.Id,
             Name = client.Name,
-            ProjectsNumber = client.Projets?.Count ?? 0
+            Projects = client.Projects?.Select(p => new ProjectDto
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).ToList() ?? [],
         };
 
         await Send.OkAsync(response);

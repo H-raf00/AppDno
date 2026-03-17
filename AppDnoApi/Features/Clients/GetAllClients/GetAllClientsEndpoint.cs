@@ -27,7 +27,7 @@ namespace AppDnoApi.Features.Clients.GetClient
             {
                 Id = client.Id,
                 Name = client.Name,
-                ProjectsNumber = client.Projets?.Count ?? 0
+                ProjectsNumber = client.Projects?.Count ?? 0
             }).ToList();
 
             await Send.OkAsync(response);

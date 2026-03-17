@@ -41,9 +41,7 @@ public class GetUserByIdEndpoint : EndpointWithoutRequest<GetUserByIdResponse>
             Projects = user.Projects?.Select(p => new ProjectDto
             {
                 Id = p.Id,
-                Code = p.Code,
-                Name = p.Name,
-                ClientId = p.ClientId
+                Name = p.Name
             }).ToList() ?? [],
         };
 

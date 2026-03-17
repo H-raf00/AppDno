@@ -73,7 +73,7 @@ namespace AppDnoApi.Database
         {
             using var db = _appdnoDb.CreateDbContext();
             return await db.Clients
-                .Include(c => c.Projets)
+                .Include(c => c.Projects)
                 .FirstOrDefaultAsync(c => c.Id == id, ct);
         }
 
@@ -81,7 +81,7 @@ namespace AppDnoApi.Database
         {
             using var db = _appdnoDb.CreateDbContext();
             return await db.Clients
-                .Include(c => c.Projets)
+                .Include(c => c.Projects)
                 .ToListAsync(ct);
         }
 
